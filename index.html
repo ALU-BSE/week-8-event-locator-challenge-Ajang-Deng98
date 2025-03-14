@@ -10,72 +10,58 @@
 <body data-page="index">
 
 <!-- Navbar -->
-<nav class="navbar navbar-expand-lg navbar-light bg-primary">
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
     <div class="container">
-        <a class="navbar-brand text-white" href="index.html">Event Locator</a>
+        <a class="navbar-brand fw-bold text-uppercase text-white" href="index.html">Event Locator</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav ms-auto">
-                <li class="nav-item"><a class="nav-link text-white" href="index.html">Home</a></li>
-                <li class="nav-item"><a class="nav-link text-white" href="events.html">Events</a></li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="index.html">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="events.html">Events</a>
+                </li>
             </ul>
         </div>
     </div>
 </nav>
 
-
 <!-- Hero Section -->
-<header class="hero text-center text-white">
+<header class="hero text-center text-white d-flex align-items-center justify-content-center">
     <div class="container">
-        <h1 class="display-4">Find Exciting Events Near You</h1>
-        <p>Search and explore events happening in your city</p>
-        <div class="search-bar mt-3">
-            <input type="text" class="form-control" placeholder="Search events...">
-            <input type="date" class="form-control">
-            <select class="form-control">
-                <option value="">All Categories</option>
-                <option value="sports">Sports</option>
-                <option value="music">Music</option>
-                <option value="conference">Conference</option>
-                <option value="workshop">Workshop</option>
-                <option value="festival">Festival</option>
-            </select>
-            <button class="btn btn-light">Search</button>
+        <h1 class="display-4 fw-bold">Find Exciting Events Near You</h1>
+        <p class="fs-5">Search and explore events happening in your city</p>
+        <div class="row justify-content-center mt-4">
+            <div class="col-md-8">
+                <div class="input-group">
+                    <input type="text" class="form-control" id="event-name" placeholder="Search events...">
+                    <input type="date" class="form-control" id="event-date">
+                    <select class="form-select" id="event-category">
+                        <option value="">All Categories</option>
+                        <option value="sports">Sports</option>
+                        <option value="music">Music</option>
+                        <option value="conference">Conference</option>
+                        <option value="workshop">Workshop</option>
+                        <option value="festival">Festival</option>
+                    </select>
+                    <button class="btn btn-dark search-btn">Search</button>
+                </div>
+            </div>
         </div>
     </div>
 </header>
 
-
 <!-- Featured Events -->
-<section class="container mt-5">
-    <h2 class="text-center">Upcoming Events</h2>
+<section class="container text-center section-padding">
+    <h2 class="text-yellow">Upcoming Events</h2>
     <div class="row" id="featured-events"></div>
 </section>
 
-<!-- Subscription Section -->
-<section class="bg-primary text-white text-center p-4">
-    <h3>Subscribe for Event Updates</h3>
-    <input type="email" class="form-control w-50 mx-auto my-2" placeholder="Enter your email">
-    <button class="btn btn-light">Subscribe</button>
-</section>
-
-<!-- Testimonials -->
-<section class="container mt-5">
-    <h2 class="text-center">What People Say</h2>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="card p-3">"Great platform for discovering events!" - John</div>
-        </div>
-        <div class="col-md-4">
-            <div class="card p-3">"I love how easy it is to use!" - Sarah</div>
-        </div>
-    </div>
-</section>
-
 <!-- Footer -->
-<footer class="text-center text-white bg-primary p-3">
+<footer class="text-center text-black bg-yellow py-3">
     &copy; 2025 Event Locator. All rights reserved.
 </footer>
 

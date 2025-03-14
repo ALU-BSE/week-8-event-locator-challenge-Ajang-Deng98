@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", function () {
-    const page = document.body.getAttribute("data-page"); // Identify the current page
+    const page = document.body.getAttribute("data-page");
 
-    // ✅ If the user is on the Home Page (index.html)
+    // ✅ Home Page Search Functionality
     if (page === "index") {
-        document.querySelector(".btn-light").addEventListener("click", function () {
-            const nameQuery = document.querySelector('input[type="text"]').value.trim();
-            const dateQuery = document.querySelector('input[type="date"]').value;
-            const categoryQuery = document.querySelector('select').value;
+        document.querySelector(".search-btn").addEventListener("click", function () {
+            const nameQuery = document.getElementById("event-name").value.trim();
+            const dateQuery = document.getElementById("event-date").value;
+            const categoryQuery = document.getElementById("event-category").value;
 
             if (!nameQuery && !dateQuery && !categoryQuery) {
                 alert("Please enter at least one search criterion!");
@@ -14,68 +14,61 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             localStorage.setItem("searchCriteria", JSON.stringify({ nameQuery, dateQuery, categoryQuery }));
-            window.location.href = "events.html"; // Redirect to event list page
+            window.location.href = "events.html"; // Redirect to events page
         });
     }
 
-    // ✅ If the user is on the Events Page (events.html)
+    // ✅ Events Page Functionality
     if (page === "events") {
         const eventContainer = document.getElementById("featured-events");
 
         const events = [
-            { id: 1, name: "Crude Oil and Refined Products Sales", date: "2025-03-03", location: "Kigali, Rwanda", description: "5-day course on crude oil trading and risk management.", category: "Workshop" },
-            { id: 2, name: "Digital Diplomacy Course", date: "2025-03-03", location: "Kigali, Rwanda", description: "Examining digital diplomacy impacts on global affairs.", category: "Workshop" },
-            { id: 3, name: "HOLOCENE FEST 3.0", date: "2025-03-01", location: "Kigali, Rwanda", description: "An exciting festival in Kigali.", category: "Festival" },
-            { id: 4, name: "Rwanda Cycling World Championships 2025", date: "2025-09-01", location: "Kigali, Rwanda", description: "Historic UCI Road World Championships in Africa.", category: "Sports" },
-            { id: 5, name: "Formula One Grand Prix Bid Announcement", date: "2024-12-13", location: "Kigali, Rwanda", description: "Rwanda's bid to host an F1 Grand Prix.", category: "Sports" }
+            { id: 1, name: "Crude Oil and Refined Products Sales", date: "2025-03-03", location: "Kigali, Rwanda", description: "5-day course on crude oil trading and risk management.", category: "workshop" },
+            { id: 2, name: "Digital Diplomacy Course", date: "2025-03-03", location: "Kigali, Rwanda", description: "Examining digital diplomacy impacts on global affairs.", category: "workshop" },
+            { id: 3, name: "HOLOCENE FEST 3.0", date: "2025-03-01", location: "Kigali, Rwanda", description: "An exciting festival in Kigali.", category: "festival" },
+            { id: 4, name: "Rwanda Cycling World Championships 2025", date: "2025-09-01", location: "Kigali, Rwanda", description: "Historic UCI Road World Championships in Africa.", category: "sports" },
+            { id: 5, name: "Formula One Grand Prix Bid Announcement", date: "2024-12-13", location: "Kigali, Rwanda", description: "Rwanda's bid to host an F1 Grand Prix.", category: "sports" }
         ];
 
-        // Store all events in localStorage (so details page can access them)
         localStorage.setItem("eventsList", JSON.stringify(events));
 
-        // Retrieve search criteria
         const searchCriteria = JSON.parse(localStorage.getItem("searchCriteria")) || {};
 
         function filterEvents(nameQuery, dateQuery, categoryQuery) {
             return events.filter(event => {
-                const matchesName = nameQuery ? event.name.toLowerCase().includes(nameQuery.toLowerCase()) : true;
-                const matchesDate = dateQuery ? event.date === dateQuery : true;
-                const matchesCategory = categoryQuery ? event.category.toLowerCase() === categoryQuery.toLowerCase() : true;
-                return matchesName && matchesDate && matchesCategory;
+                return (!nameQuery || event.name.toLowerCase().includes(nameQuery.toLowerCase())) &&
+                       (!dateQuery || event.date === dateQuery) &&
+                       (!categoryQuery || event.category.toLowerCase() === categoryQuery.toLowerCase());
             });
         }
 
-        // Filter and display events
         const filteredEvents = filterEvents(searchCriteria.nameQuery, searchCriteria.dateQuery, searchCriteria.categoryQuery);
 
-        if (filteredEvents.length > 0) {
-            eventContainer.innerHTML = filteredEvents.map(event => `
+        eventContainer.innerHTML = filteredEvents.length
+            ? filteredEvents.map(event => `
                 <div class="col-md-4">
-                    <div class="card">
-                        <div class="card-body">
-                            <h5 class="card-title">${event.name}</h5>
-                            <p><strong>Date:</strong> ${event.date}</p>
-                            <p><strong>Location:</strong> ${event.location}</p>
-                            <button class="btn btn-primary" onclick="viewEvent(${event.id})">View Details</button>
-                        </div>
+                    <div class="card p-3">
+                        <h5>${event.name}</h5>
+                        <p><strong>Date:</strong> ${event.date}</p>
+                        <p><strong>Location:</strong> ${event.location}</p>
+                        <button class="btn btn-primary" onclick="viewEvent(${event.id})">View Details</button>
                     </div>
-                </div>`).join("");
-        } else {
-            eventContainer.innerHTML = `<p class="text-center text-danger">No events found.</p>`;
-        }
+                </div>
+            `).join("")
+            : `<p class="text-center text-danger">No events found.</p>`;
     }
 
-    // ✅ If the user is on the Event Details Page (event-details.html)
+    // ✅ Event Details Page Functionality
     if (page === "event-details") {
         const selectedEvent = JSON.parse(localStorage.getItem("selectedEvent"));
 
         if (selectedEvent) {
             document.getElementById("event-name").textContent = selectedEvent.name;
-            document.getElementById("event-date").textContent = selectedEvent.date;
-            document.getElementById("event-location").textContent = selectedEvent.location;
-            document.getElementById("event-description").textContent = selectedEvent.description;
+            document.getElementById("event-date").textContent = `📅 Date: ${selectedEvent.date}`;
+            document.getElementById("event-location").textContent = `📍 Location: ${selectedEvent.location}`;
+            document.getElementById("event-description").textContent = `📝 ${selectedEvent.description}`;
         } else {
-            document.getElementById("event-details").innerHTML = "<p class='text-center'>Event not found.</p>";
+            document.getElementById("event-details").innerHTML = "<p class='text-center text-danger'>Event not found.</p>";
         }
     }
 });
