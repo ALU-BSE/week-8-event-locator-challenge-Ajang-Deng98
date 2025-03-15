@@ -1,86 +1,135 @@
-/* General Styles */
-body {
-    background-color: #fff; /* 60% White */
-    color: #000; /* 10% Black */
+/* Color Variables */
+:root {
+    --primary-white: #FFFFFF;  /* 80% White */
+    --primary-black: #222222;  /* 10% Black */
+    --accent-yellow: #FFD700;  /* 10% Yellow */
 }
 
+/* General Styles */
+body {
+    background-color: var(--primary-white);
+    color: var(--primary-black);
+    font-family: "Nunito", sans-serif;
+    font-optical-sizing: auto;
+    
+}
+
+/* Navbar */
 .navbar {
-    background: rgba(0, 0, 0, 0.9); 
+    background: var(--primary-black);
     padding: 15px 0;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
-    .navbar-brand {
-        font-size: 1.4rem;
-        letter-spacing: 1px;
-        transition: color 0.3s ease-in-out;
-        
-        &:hover {
-            color: #f8d210; 
-        }
-    }
+.navbar-brand {
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+    color: var(--primary-white);
+    transition: color 0.3s ease-in-out;
+}
 
-    .nav-link {
-        font-size: 1.1rem;
-        margin: 0 10px;
-        position: relative;
-        transition: all 0.3s ease;
+.navbar-brand:hover {
+    color: var(--accent-yellow);
+}
 
-        &:hover {
-            color: #f8d210;
-        }
+.nav-link {
+    font-size: 1.1rem;
+    margin: 0 10px;
+    color: var(--primary-white);
+    position: relative;
+    transition: all 0.3s ease;
+}
 
-        &::after {
-            content: '';
-            display: block;
-            width: 0;
-            height: 2px;
-            background: #f8d210;
-            transition: width 0.3s;
-        }
+.nav-link:hover {
+    color: var(--accent-yellow);
+}
 
-        &:hover::after {
-            width: 100%;
-        }
-    }
+.nav-link::after {
+    content: '';
+    display: block;
+    width: 0;
+    height: 2px;
+    background: var(--accent-yellow);
+    transition: width 0.3s;
+}
+
+.nav-link:hover::after {
+    width: 100%;
 }
 
 /* Hero Section */
 .hero {
-    background-color: #FFD700; /* Yellow */
-    color: #000; /* Black */
+    background-color: var(--primary-white);
+    color: var(--primary-black);
     padding: 100px 0;
     min-height: 60vh;
+    border-bottom: 4px solid var(--accent-yellow);
 }
+
+
+.hero h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    background: linear-gradient(to right, #222 70%, #FFD700 30%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.hero p {
+    font-size: 1.5rem;
+    background: linear-gradient(to right, #222 70%, #FFD700 30%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+/* Input Fields */
 .input-group .form-control,
 .input-group .form-select {
     border-radius: 0;
-    border: 2px solid #000;
+    border: 2px solid var(--primary-black);
+    background-color: var(--primary-white);
+    color: var(--primary-black);
 }
+
+.input-group .form-control::placeholder {
+    color: var(--primary-black);
+    opacity: 0.7;
+}
+
+/* Buttons */
 .btn-dark {
-    background-color: #000; /* Black */
-    color: #fff;
+    background-color: var(--primary-black);
+    color: var(--primary-white);
     border: none;
+    transition: background 0.3s ease-in-out;
 }
+
 .btn-dark:hover {
-    background-color: #222;
+    background-color: var(--accent-yellow);
+    color: var(--primary-black);
 }
 
-
-
-
-.bg-yellow {
-    background-color: #FFD700 !important; /* 30% Yellow */
-}
-.text-yellow {
-    color: #FFD700 !important;
-}
+/* Sections */
 .section-padding {
     padding: 60px 0;
 }
+
+/* Text Colors */
+.text-yellow {
+    color: var(--accent-yellow) !important;
+}
+
+/* Yellow Backgrounds */
+.bg-yellow {
+    background-color: var(--accent-yellow) !important;
+    color: var(--primary-black);
+}
+
+/* Cards */
 .card {
-    border: none;
-    background: #FFD700; /* Yellow */
-    color: #000;
+    border: 1px solid var(--primary-black);
+    background: var(--primary-white);
+    color: var(--primary-black);
     padding: 20px;
     text-align: center;
     font-weight: 500;
@@ -88,9 +137,26 @@ body {
     border-radius: 10px;
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+/* Subscription Section */
 .subscription-section input {
     max-width: 400px;
+    border: 1px solid var(--primary-black);
 }
+
+/* Footer */
 footer {
     font-size: 14px;
+    background-color: var(--primary-black);
+    color: var(--primary-white);
+    padding: 20px 0;
+}
+
+footer a {
+    color: var(--primary-white);
+    transition: color 0.3s ease;
+}
+
+footer a:hover {
+    color: var(--accent-yellow);
 }
