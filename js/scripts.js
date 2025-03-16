@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
 
             localStorage.setItem("searchCriteria", JSON.stringify({ nameQuery, dateQuery, categoryQuery }));
-            window.location.href = "events.html"; // Redirect to events page
+            window.location.href = "events.html"; 
         });
     }
 
