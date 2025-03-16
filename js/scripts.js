@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
     if (page === "events") {
         const eventContainer = document.getElementById("featured-events");
 
-        const events = [
+        let events = [
             { id: 1, name: "Crude Oil and Refined Products Sales", date: "2025-03-03", location: "Kigali, Rwanda", description: "5-day course on crude oil trading and risk management.", category: "workshop" },
             { id: 2, name: "Digital Diplomacy Course", date: "2025-03-03", location: "Kigali, Rwanda", description: "Examining digital diplomacy impacts on global affairs.", category: "workshop" },
             { id: 3, name: "HOLOCENE FEST 3.0", date: "2025-03-01", location: "Kigali, Rwanda", description: "An exciting festival in Kigali.", category: "festival" },
@@ -32,30 +32,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
         localStorage.setItem("eventsList", JSON.stringify(events));
 
-        const searchCriteria = JSON.parse(localStorage.getItem("searchCriteria")) || {};
-
-        function filterEvents(nameQuery, dateQuery, categoryQuery) {
-            return events.filter(event => {
-                return (!nameQuery || event.name.toLowerCase().includes(nameQuery.toLowerCase())) &&
-                       (!dateQuery || event.date === dateQuery) &&
-                       (!categoryQuery || event.category.toLowerCase() === categoryQuery.toLowerCase());
-            });
+        function displayEvents(eventList) {
+            eventContainer.innerHTML = eventList.length
+                ? eventList.map(event => `
+                    <div class="col-md-4">
+                        <div class="card p-3">
+                            <h5>${event.name}</h5>
+                            <p><strong>Date:</strong> ${event.date}</p>
+                            <p><strong>Location:</strong> ${event.location}</p>
+                            <button class="btn btn-primary" onclick="viewEvent(${event.id})">View Details</button>
+                        </div>
+                    </div>
+                `).join("")
+                : `<p class="text-center text-danger">No events found.</p>`;
         }
 
-        const filteredEvents = filterEvents(searchCriteria.nameQuery, searchCriteria.dateQuery, searchCriteria.categoryQuery);
-
-        eventContainer.innerHTML = filteredEvents.length
-            ? filteredEvents.map(event => `
-                <div class="col-md-4">
-                    <div class="card p-3">
-                        <h5>${event.name}</h5>
-                        <p><strong>Date:</strong> ${event.date}</p>
-                        <p><strong>Location:</strong> ${event.location}</p>
-                        <button class="btn btn-primary" onclick="viewEvent(${event.id})">View Details</button>
-                    </div>
-                </div>
-            `).join("")
-            : `<p class="text-center text-danger">No events found.</p>`;
+        // Check if returning from details page
+        if (document.referrer.includes("event-details.html")) {
+            localStorage.removeItem("searchCriteria"); // Clear search filters when coming back
+            displayEvents(events); // Show all events
+        } else {
+            const searchCriteria = JSON.parse(localStorage.getItem("searchCriteria")) || {};
+            const filteredEvents = events.filter(event => {
+                return (!searchCriteria.nameQuery || event.name.toLowerCase().includes(searchCriteria.nameQuery.toLowerCase())) &&
+                       (!searchCriteria.dateQuery || event.date === searchCriteria.dateQuery) &&
+                       (!searchCriteria.categoryQuery || event.category.toLowerCase() === searchCriteria.categoryQuery.toLowerCase());
+            });
+            displayEvents(filteredEvents);
+        }
     }
 
     // ✅ Event Details Page Functionality
